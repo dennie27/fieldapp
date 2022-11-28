@@ -13,6 +13,66 @@ class MyTaskView extends StatefulWidget {
   MyTaskViewState createState() => MyTaskViewState();
 }
 class MyTaskViewState extends State<MyTaskView> {
+  final List<Map<String, dynamic>> _allUsers = [
+    {"id": 1, "name": "Collection Score", "request": "New Request","priority":"High"},
+    {"id": 2, "name": "Team Management", "request": "pending Approval","priority":"Normal"},
+    {"id": 3, "name": "Customer Management", "request": "New Request","priority":"Normal"},
+    {"id": 4, "name": "Pilot Management", "request": "Rejected","priority":"Low"},
+    {"id": 5, "name": "Process Management", "request": "New Request","priority":"Low"},
+    {"id": 6, "name": "Customer Management", "request": "Pending","priority":"High"},
+    {"id": 7, "name": "Process Management", "request": "Rejected","priority":"Normal"},
+    {"id": 8, "name": "Collection Score", "request": "Rejected","priority":"High"},
+    {"id": 9, "name": "Team Management","request": "Pending Approval","priority":"High"},
+    {"id": 10, "name": "Pilot Management", "request": "Rejected ","priority":"Normal"},
+  ];
+  List<Map<String, dynamic>> _foundUsers = [];
+  void _searchFilter(String enteredKeyword) {
+    List<Map<String, dynamic>> results = [];
+    if (enteredKeyword.isEmpty) {
+      // if the search field is empty or only contains white-space, we'll display all users
+      results = _allUsers;
+    } else {
+      results = _allUsers
+          .where((user) =>
+          user["name"].toLowerCase().contains(enteredKeyword.toLowerCase()))
+          .toList();
+      // we use the toLowerCase() method to make it case-insensitive
+    }
+
+    // Refresh the UI
+    setState(() {
+      _foundUsers = results;
+    });
+  }
+  void _statusFilter(String _status) {
+    List<Map<String, dynamic>> results = [];
+    switch(_status) {
+
+      case "high": { results = _allUsers.where((user) =>
+          user["priority"].toLowerCase().contains(_status.toLowerCase()))
+          .toList(); }
+      break;
+
+      case "normal": {  results = _allUsers
+          .where((user) =>
+          user["priority"].toLowerCase().contains(_status.toLowerCase()))
+          .toList(); }
+      break;
+
+      case "low": {  results = _allUsers
+          .where((user) =>
+          user["priority"].toLowerCase().contains(_status.toLowerCase()))
+          .toList(); }
+      break;
+      case "All": {  results = _allUsers; }
+    }
+
+
+    // Refresh the UI
+    setState(() {
+      _foundUsers = results;
+    });
+  }
   List data =[];
   var _key=GlobalKey();
 
@@ -69,9 +129,9 @@ class MyTaskViewState extends State<MyTaskView> {
                   animation: true,
                   animationDuration: 1000,
                   lineHeight: 15.0,
-                  percent: 0.4,
-                  progressColor: Colors.red,
-                  center: Text("40.0%"),
+                  percent: 0.7,
+                  progressColor: Colors.green,
+                  center: Text("70.0%"),
                 ),
 
                 SizedBox(height: 10,),
@@ -84,9 +144,9 @@ class MyTaskViewState extends State<MyTaskView> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Text("6 Complete",style: TextStyle(color: Colors.green),),
-                    Text("3 Pending",style: TextStyle(color: Colors.orange)),
-                    Text("5 Over Due",style: TextStyle(color: Colors.red)),
+                    Text("8 Complete",style: TextStyle(color: Colors.green),),
+                    Text("1 Pending",style: TextStyle(color: Colors.orange)),
+                    Text("2 Over Due",style: TextStyle(color: Colors.red)),
 
 
 
@@ -101,9 +161,9 @@ class MyTaskViewState extends State<MyTaskView> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Text("6 High",style: TextStyle(color: Colors.green)),
-                    Text("3 Normal",style: TextStyle(color: Colors.orange)),
-                    Text("5 Low",style: TextStyle(color: Colors.red)),
+                    Text("10 High",style: TextStyle(color: Colors.green)),
+                    Text("6 Normal",style: TextStyle(color: Colors.orange)),
+                    Text("2 Low",style: TextStyle(color: Colors.red)),
 
 
                   ],
@@ -112,6 +172,7 @@ class MyTaskViewState extends State<MyTaskView> {
               ],
             ),
           ),
+          SizedBox(height: 20,),
           Container(
               padding:EdgeInsets.only(left: 30, right: 30, bottom: 5, top: 5),
               margin: EdgeInsets.only(left: 10, right: 10, bottom: 5, top: 5),
@@ -119,20 +180,52 @@ class MyTaskViewState extends State<MyTaskView> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Icon(Icons.filter_alt_rounded),
-                  Icon(Icons.search),
+                  PopupMenuButton(
+                    onSelected:(reslust) =>_statusFilter(reslust),
+                    itemBuilder: (context) => [
+                      PopupMenuItem(
+                          child: Text("All"),
+                          value: "All"
+                      ),
+                      PopupMenuItem(
+                          child: Text("High"),
+                          value: "high"
+                      ),
+                      PopupMenuItem(
+                          child: Text("normal"),
+                          value: "normal"
+                      ),
+                      PopupMenuItem(
+                          child: Text("Low"),
+                          value: "low"
+                      ),
+                    ],
+                    icon: Icon(
+                        Icons.filter_list_alt,color: Colors.yellow
+                    ),
+
+                  ),
+                  Expanded(
+                    child: TextField(
+                      onChanged: (value) => _searchFilter(value),
+                      decoration: const InputDecoration(
+                          labelText: 'Search', suffixIcon: Icon(Icons.search)),
+                    ),
+                  ),
                 ],
               )
           ),
           Expanded(
-            
-            child: SingleChildScrollView(
+
+            child: _foundUsers.isNotEmpty
+          ? SingleChildScrollView(
               child: ListView.builder(
                 physics: NeverScrollableScrollPhysics(),
                 scrollDirection: Axis.vertical,
                 shrinkWrap: true,
-                itemCount:20,
-                itemBuilder: (context, index) => InkWell(
+                itemCount:_foundUsers.length,
+                itemBuilder: (context, index) {
+                  return InkWell(
                   onTap: (){
                     },
                   child:Row(
@@ -155,9 +248,9 @@ class MyTaskViewState extends State<MyTaskView> {
 
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text("Task Group"),
+                                  Text("Task: ${_foundUsers[index]['name']}"),
                                   Text("Task :"),
-                                  Text("Priority:"),
+                                  Text("Priority:${_foundUsers[index]['priority']}"),
                                   Text("Over due:"),
                                 ],
                               ),
@@ -168,8 +261,11 @@ class MyTaskViewState extends State<MyTaskView> {
 
                     ],
                   ),
-                ),
+                );},
               ),
+            ):const Text(
+              'No results found',
+              style: TextStyle(fontSize: 15),
             ),
           ),
         ],

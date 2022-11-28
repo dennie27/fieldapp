@@ -4,11 +4,22 @@ import 'package:FieldApp/utils/themes/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:percent_indicator/circular_percent_indicator.dart';
+class DashView extends StatefulWidget {
+  @override
+  DashViewState createState() =>  DashViewState();
+}
+class DashViewState extends State<DashView> {
+  final List<Map<String, dynamic>> _allUsers = [
+    {"id": 1, "name": "Abdallah", "region":"Northern", "task":5,"area":"Kahama"},
+    {"id": 2, "name": "Dennis", "region":"South", "task":7,"area":"Arusha"},
+    {"id": 3, "name": "Jackson", "region":"Coast", "task":9,"area":"Mwanza"},
+    {"id": 4, "name": "Barbara","region":"Central", "task":12,"area":"Mbeya"},
+    {"id": 5, "name": "Candy", "region":"West", "task":1,"area":"Tanga"},
 
-class DashView extends StatelessWidget {
-
+  ];
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
 
@@ -60,7 +71,7 @@ class DashView extends StatelessWidget {
                   color: Colors.white,
                   child: Column(
                     children: [
-                      Text("20",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 24,color: Colors.red),),
+                      Text("40",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 24,color: Colors.red),),
                       SizedBox(height: 10,),
                       Text("Area Name"),
                       SizedBox(height: 10,),

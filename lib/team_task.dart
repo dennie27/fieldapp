@@ -52,7 +52,7 @@ class TeamTaskState extends State<TeamTask> {
           user["name"].toLowerCase().contains(_status.toLowerCase()))
           .toList(); }
       break;
-      case "Barbara": {  results = _allUsers
+      case "zainab": {  results = _allUsers
           .where((user) =>
           user["name"].toLowerCase().contains(_status.toLowerCase()))
           .toList(); }
@@ -123,7 +123,7 @@ class TeamTaskState extends State<TeamTask> {
                        ),
                        PopupMenuItem(
                            child: Text("Zainab"),
-                           value: "Barbara"
+                           value: "zainab"
                        ),
                        //mewnu
                        PopupMenuItem(child: Text("Candy"),

@@ -98,6 +98,34 @@ class AddTaskState extends State<AddTask> {
     'Item 4',
     'Item 5',
   ];
+  var region = [
+    'Region 1',
+    'Region 2',
+    'Region 3',
+    'Region 4',
+    'Region 5',
+  ];
+  var area = [
+    'Area 1',
+    'Area 2',
+    'Area 3',
+    'Area 4',
+    'Area 5',
+  ];
+  var role = [
+    'CLE',
+    'EO',
+    'ABM',
+    'RBM',
+    'CA',
+  ];
+  var users = [
+    'Dennis',
+    'Jackson',
+    'Hadija',
+    'Hamis',
+    'Zainab',
+  ];
 
   String taskValue = 'Select task';
   String startDate = 'date start';
@@ -172,16 +200,6 @@ class AddTaskState extends State<AddTask> {
             margin: EdgeInsets.all(10),
             child: Column(
               children: [
-                DropdownButton<String?>(
-                    value: selectedTask,
-                    items: dataset.keys.map((e) {
-                      return DropdownMenuItem<String?>(
-                        value: e,
-                        child: Text('$e'),
-                      );
-                    }).toList(),
-                    onChanged: onTaskChanged),
-
                 DropdownButtonFormField<String?>(
                     value: selectedTask,
                     decoration: InputDecoration(
@@ -228,7 +246,7 @@ class AddTaskState extends State<AddTask> {
                         hintStyle: TextStyle(color: Colors.grey[800]),
                         hintText: "Name",
                         fillColor: Colors.white),
-                    items:items.map((String items) {
+                    items:region.map((String items) {
                       return DropdownMenuItem(value: items,child: Text(items),);
                     }).toList(), onChanged: (v){}),
                 SizedBox(height: 10,),
@@ -240,7 +258,7 @@ class AddTaskState extends State<AddTask> {
                         hintStyle: TextStyle(color: Colors.grey[800]),
                         hintText: "Name",
                         fillColor: Colors.white),
-                    items:items.map((String items) {
+                    items:area.map((String items) {
                       return DropdownMenuItem(value: items,child: Text(items),);
                     }).toList(), onChanged: (v){}),
                 SizedBox(height: 10,),
@@ -252,7 +270,7 @@ class AddTaskState extends State<AddTask> {
                         hintStyle: TextStyle(color: Colors.grey[800]),
                         hintText: "Name",
                         fillColor: Colors.white),
-                    items:items.map((String items) {
+                    items:role.map((String items) {
                       return DropdownMenuItem(value: items,child: Text(items),);
                     }).toList(), onChanged: (v){}),
                 SizedBox(height: 10,),
@@ -264,7 +282,7 @@ class AddTaskState extends State<AddTask> {
                         hintStyle: TextStyle(color: Colors.grey[800]),
                         hintText: "User Role",
                         fillColor: Colors.white),
-                    items:items.map((String items) {
+                    items:users.map((String items) {
                       return DropdownMenuItem(value: items,child: Text(items),);
                     }).toList(), onChanged: (v){}),
                 SizedBox(height: 10,),

@@ -176,8 +176,8 @@ class PendingTaskState extends State<PendingTask> {
                                         children: [
 
                                           Text(user['name']),
-                                          Text('${_foundUsers[index]["age"]
-                                              .toString()} years old'),
+                                          Text('${_foundUsers[index]["request"]
+                                              .toString()} '),
                                           Text(name),
                                           Text("status: ${user['status']}"),
                                         ],
